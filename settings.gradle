@@ -1,0 +1,2 @@
+rootProject.name = 'macache'
+include('lib','app')
