@@ -19,7 +19,7 @@ class MacacheSpec extends Specification {
     def "Should increment size and return value of an added item"() {
         given:
         int initialSize = cache.size()
-        cache.put("key", "value");
+        cache.put("key", "value")
         when:
         def result = cache.get("key")
         then:
@@ -29,7 +29,7 @@ class MacacheSpec extends Specification {
 
     def "Should return null for null key"() {
         given:
-        cache.put(null, "value");
+        cache.put(null, "value")
         when:
         def result = cache.get(null)
         then:
@@ -39,7 +39,7 @@ class MacacheSpec extends Specification {
 
     def "Should return null for null for null item value"() {
         given:
-        cache.put("key", null);
+        cache.put("key", null)
         when:
         def result = cache.get("key")
         then:
