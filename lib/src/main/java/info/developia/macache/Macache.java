@@ -24,25 +24,35 @@ public class Macache<K, V> implements AutoCloseable {
 
     public Macache() {
         this.filler = null;
-        this.scheduledFuture = null;
         this.scheduler = null;
+        this.scheduledFuture = null;
     }
 
     public Macache(Supplier<Map<K, V>> filler) {
         this.filler = filler;
-        this.scheduledFuture = null;
         this.scheduler = null;
+        this.scheduledFuture = null;
         fillCache();
     }
 
-    public Macache(Supplier<Map<K, V>> filler, Duration duration) {
+    public Macache(Duration cacheValidPeriod){
+        this.filler = null;
+        this.scheduler = Executors.newScheduledThreadPool(1);
+        this.scheduledFuture = scheduler.scheduleAtFixedRate(this::invalidateCache, cacheValidPeriod.toMillis(), 1, MILLISECONDS);
+    }
+
+    public Macache(Supplier<Map<K, V>> filler, Duration refillPeriod) {
         this.filler = filler;
         this.scheduler = Executors.newScheduledThreadPool(1);
-        this.scheduledFuture = scheduler.scheduleAtFixedRate(this::fillCache, 0, duration.toMillis(), MILLISECONDS);
+        this.scheduledFuture = scheduler.scheduleAtFixedRate(this::fillCache, 0, refillPeriod.toMillis(), MILLISECONDS);
     }
 
     private void fillCache() {
         data.putAll(this.filler.get());
+    }
+
+    private void invalidateCache() {
+        data.clear();
     }
 
     public void put(K key, V value) {
