@@ -45,4 +45,10 @@ public class CacheExpire<K, V> extends Cache<K, V> {
         super.del(key);
         keyTimestamp.remove(key);
     }
+
+    @Override
+    public void clear() {
+        super.clear();
+        keyTimestamp.clear();
+    }
 }

@@ -1,9 +1,11 @@
 package info.developia.app;
 
 import info.developia.macache.Cache;
+import info.developia.macache.CacheExpire;
 import info.developia.macache.Macache;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -37,8 +39,12 @@ public class App {
 //
 //        var cacheWithFillerSchedule = new Macache<>(filler, Duration.ofSeconds(12));
 //        cacheWithFillerSchedule.size();
-//        while (true){
-//            Thread.sleep(1000);
-//        }
+        Cache<String, String> cacheExpire = new CacheExpire<>(Duration.ofMinutes(1));
+        filler.get().forEach(cacheExpire::put);
+        while (true) {
+            Thread.sleep(1000);
+            var print = cacheExpire.get("key1");
+            System.out.println("time %s value %s".formatted(LocalDateTime.now(), print));
+        }
     }
 }
