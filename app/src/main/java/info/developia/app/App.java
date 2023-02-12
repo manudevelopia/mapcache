@@ -1,7 +1,6 @@
 package info.developia.app;
 
 import info.developia.macache.Cache;
-import info.developia.macache.CacheExpire;
 import info.developia.macache.Macache;
 
 import java.time.Duration;
@@ -39,7 +38,7 @@ public class App {
 //
 //        var cacheWithFillerSchedule = new Macache<>(filler, Duration.ofSeconds(12));
 //        cacheWithFillerSchedule.size();
-        Cache<String, String> cacheExpire = new CacheExpire<>(Duration.ofMinutes(1));
+        Cache<String, String> cacheExpire = Macache.expireIn(Duration.ofMinutes(1));
         filler.get().forEach(cacheExpire::put);
         while (true) {
             Thread.sleep(1000);

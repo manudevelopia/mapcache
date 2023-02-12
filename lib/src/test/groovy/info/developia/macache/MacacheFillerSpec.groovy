@@ -11,10 +11,10 @@ class MacacheFillerSpec extends Specification {
             "key3", "value3"
     )
     Supplier<Map<String, String>> filler = () -> data
-    Macache cache
+    Cache<String, String> cache
 
     def setup() {
-        cache = new Macache<String, String>(filler)
+        cache = Macache.filledOnce { filler }
     }
 
     def "Should have size as data right after initialization with filler"() {

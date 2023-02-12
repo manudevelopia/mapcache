@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-public class CacheExpire<K, V> extends Cache<K, V> {
+class CacheExpire<K, V> extends CacheBasic<K, V> {
     private final Map<K, Long> keyTimestamp = new LinkedHashMap<>();
     private final long cacheValidPeriodInMillis;
 

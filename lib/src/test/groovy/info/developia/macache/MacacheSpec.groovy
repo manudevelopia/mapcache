@@ -3,10 +3,10 @@ package info.developia.macache
 import spock.lang.Specification
 
 class MacacheSpec extends Specification {
-    Macache cache
+    Cache<String, String> cache
 
     def setup() {
-        cache = new Macache<String, String>()
+        cache = Macache.basic()
     }
 
     def "Should not have any item right after initialization"() {
