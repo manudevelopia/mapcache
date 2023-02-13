@@ -49,4 +49,9 @@ class CacheBasic<K, V> implements Cache<K, V> {
     public int size() {
         return data.size();
     }
+
+    @Override
+    public void close() {
+        data.clear();
+    }
 }

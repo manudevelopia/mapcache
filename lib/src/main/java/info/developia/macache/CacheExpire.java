@@ -4,12 +4,16 @@ import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 class CacheExpire<K, V> extends CacheBasic<K, V> {
     private final Map<K, Long> keyTimestamp = new LinkedHashMap<>();
     private final long cacheValidPeriodInMillis;
+    private final ScheduledExecutorService scheduler;
+    private final ScheduledFuture<?> schedulerFuture;
 
     public CacheExpire(Duration cacheValidPeriod) {
         this(cacheValidPeriod, 20000);
@@ -17,7 +21,8 @@ class CacheExpire<K, V> extends CacheBasic<K, V> {
 
     public CacheExpire(Duration cacheValidPeriod, long defaultDeletePeriod) {
         cacheValidPeriodInMillis = cacheValidPeriod.toMillis();
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(this::delExpiredKeys, this.cacheValidPeriodInMillis, defaultDeletePeriod, MILLISECONDS);
+        scheduler = Executors.newScheduledThreadPool(1);
+        schedulerFuture = scheduler.scheduleAtFixedRate(this::delExpiredKeys, this.cacheValidPeriodInMillis, defaultDeletePeriod, MILLISECONDS);
     }
 
     private void delExpiredKeys() {
@@ -50,5 +55,12 @@ class CacheExpire<K, V> extends CacheBasic<K, V> {
     public void clear() {
         super.clear();
         keyTimestamp.clear();
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        schedulerFuture.cancel(true);
+        scheduler.shutdown();
     }
 }
