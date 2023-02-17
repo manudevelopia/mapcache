@@ -14,6 +14,7 @@ class CacheExpire<K, V> extends CacheBasic<K, V> {
     private final long cacheValidPeriodInMillis;
     private final ScheduledExecutorService scheduler;
     private final ScheduledFuture<?> schedulerFuture;
+    private final TreadManager treadManager = new TreadManager();
 
     public CacheExpire(Duration cacheValidPeriod) {
         this(cacheValidPeriod, 20000);
@@ -26,8 +27,17 @@ class CacheExpire<K, V> extends CacheBasic<K, V> {
     }
 
     private void delExpiredKeys() {
-        long now = System.currentTimeMillis();
-        keyTimestamp.entrySet().stream().takeWhile((entry -> entry.getValue() < now)).forEach(entry -> del(entry.getKey()));
+        if (treadManager.appIsAlive()) {
+            long now = System.currentTimeMillis();
+            keyTimestamp.entrySet().stream().takeWhile((entry -> entry.getValue() < now)).forEach(entry -> del(entry.getKey()));
+        } else {
+            shutdownScheduler();
+        }
+    }
+
+    private void shutdownScheduler() {
+        schedulerFuture.cancel(true);
+        scheduler.shutdown();
     }
 
     @Override
@@ -60,7 +70,6 @@ class CacheExpire<K, V> extends CacheBasic<K, V> {
     @Override
     public void close() {
         super.close();
-        schedulerFuture.cancel(true);
-        scheduler.shutdown();
+        shutdownScheduler();
     }
 }

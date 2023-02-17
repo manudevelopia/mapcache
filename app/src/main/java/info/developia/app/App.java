@@ -25,14 +25,13 @@ public class App {
         cacheFilledOnce.put("key4", "value4");
         cacheFilledOnce.get("key4");
         cacheFilledOnce.size();
-        try (Cache<String, String> cacheExpire = Macache.expireIn(Duration.ofMinutes(1))) {
-            filler.get().forEach(cacheExpire::put);
-            int counter = 50;
-            while (--counter > 0) {
-                Thread.sleep(1000);
-                var print = cacheExpire.get("key1");
-                System.out.println("counter %d time %s value %s".formatted(counter, LocalDateTime.now(), print));
-            }
+        Cache<String, String> cacheExpire = Macache.expireIn(Duration.ofMinutes(1));
+        filler.get().forEach(cacheExpire::put);
+        int counter = 50;
+        while (--counter > 0) {
+            Thread.sleep(1000);
+            var print = cacheExpire.get("key1");
+            System.out.println("counter %d time %s value %s".formatted(counter, LocalDateTime.now(), print));
         }
 
 //        var cache = new Macache<String, String>();
