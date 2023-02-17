@@ -27,8 +27,8 @@ public class App {
         cacheFilledOnce.size();
         Cache<String, String> cacheExpire = Macache.expireIn(Duration.ofMinutes(1));
         filler.get().forEach(cacheExpire::put);
-        int counter = 50;
-        while (--counter > 0) {
+        int counter = 0;
+        while (++counter < 60) {
             Thread.sleep(1000);
             var print = cacheExpire.get("key1");
             System.out.println("counter %d time %s value %s".formatted(counter, LocalDateTime.now(), print));
