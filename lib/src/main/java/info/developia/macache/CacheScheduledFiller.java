@@ -12,7 +12,9 @@ class CacheScheduledFiller<K, V> extends CacheBasic<K, V> {
 
     public CacheScheduledFiller(Supplier<Map<K, V>> filler, Duration refillPeriod) {
         this.filler = filler;
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(this::fillCache, 0, refillPeriod.toMillis(), MILLISECONDS);
+        long refillPeriodAsMillis = refillPeriod.toMillis();
+        fillCache();
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(this::fillCache, refillPeriodAsMillis, refillPeriodAsMillis, MILLISECONDS);
     }
 
     private void fillCache() {

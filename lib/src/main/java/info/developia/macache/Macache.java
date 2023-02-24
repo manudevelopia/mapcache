@@ -11,11 +11,15 @@ public class Macache {
         return new CacheBasic<>();
     }
 
-    public static <V, K> CacheFilledOnce<K, V> filledOnce(Supplier<Map<K, V>> filler) {
+    public static <V, K> Cache<K, V> filledOnce(Supplier<Map<K, V>> filler) {
         return new CacheFilledOnce<>(filler);
     }
 
-    public static Cache<String, String> expireIn(Duration duration) {
+    public static <V, K> Cache<V, K> expireIn(Duration duration) {
         return new CacheExpire<>(duration);
+    }
+
+    public static <V, K> Cache<V, K> scheduledFiller(Supplier<Map<V, K>> filler, Duration duration) {
+        return new CacheScheduledFiller<>(filler, duration);
     }
 }
