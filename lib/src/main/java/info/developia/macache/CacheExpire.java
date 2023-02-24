@@ -10,21 +10,14 @@ class CacheExpire<K, V> extends CacheBasic<K, V> {
     private final TaskManager taskManager = new TaskManager();
 
     public CacheExpire(Duration cacheValidPeriod) {
-        this(cacheValidPeriod, 20000);
-    }
-
-    public CacheExpire(Duration cacheValidPeriod, long defaultDeletePeriod) {
         cacheValidPeriodInMillis = cacheValidPeriod.toMillis();
         taskManager.schedule(this::delExpiredKeys, cacheValidPeriodInMillis);
     }
 
     private void delExpiredKeys() {
-        if (taskManager.appIsAlive()) {
-            long now = System.currentTimeMillis();
-            keyTimestamp.entrySet().stream().takeWhile((entry -> entry.getValue() < now)).forEach(entry -> del(entry.getKey()));
-        } else {
-            taskManager.shutdown();
-        }
+        long now = System.currentTimeMillis();
+        keyTimestamp.entrySet().stream().takeWhile((entry -> entry.getValue() < now))
+                .forEach(entry -> del(entry.getKey()));
     }
 
     @Override
@@ -54,7 +47,6 @@ class CacheExpire<K, V> extends CacheBasic<K, V> {
         keyTimestamp.clear();
     }
 
-    @Override
     public void close() {
         super.close();
         taskManager.shutdown();
