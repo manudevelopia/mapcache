@@ -32,6 +32,11 @@ class CacheBasic<K, V> implements Cache<K, V> {
         }
     }
 
+    @Override
+    public boolean contains(K key) {
+        return key != null && data.containsKey(key);
+    }
+
     public void del(K key) {
         if (key == null) return;
         try {
