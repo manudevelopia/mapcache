@@ -7,10 +7,10 @@ import java.util.function.Supplier;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-class CacheScheduledFiller<K, V> extends CacheBasic<K, V> {
+class CacheFillerScheduled<K, V> extends CacheBasic<K, V> {
     private final Supplier<Map<K, V>> filler;
 
-    public CacheScheduledFiller(Supplier<Map<K, V>> filler, Duration refillPeriod) {
+    public CacheFillerScheduled(Supplier<Map<K, V>> filler, Duration refillPeriod) {
         this.filler = filler;
         long refillPeriodAsMillis = refillPeriod.toMillis();
         fillCache();

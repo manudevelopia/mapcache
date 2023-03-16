@@ -14,7 +14,7 @@ class MacacheFillerSpec extends Specification {
     Cache<String, String> cache
 
     def setup() {
-        cache = Macache.filledOnce(filler)
+        cache = Macache.filledOnce(filler).build()
     }
 
     def "Should have size as data right after initialization with filler"() {

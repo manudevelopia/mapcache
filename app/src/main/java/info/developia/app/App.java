@@ -17,6 +17,13 @@ public class App {
     static int counter = 0;
 
     public static void main(String[] args) throws InterruptedException {
+        Cache<String, String> c = Macache.build();
+        Cache<String, String> ca = Macache.filledOnce(filler).maxSize(20).build();
+//                .config().filler().maxSize()
+////                .filler(filler)
+////                .maxSize(50)
+//                .build();
+
 //        Cache<String, String> cache = Macache.basic();
 //        cache.put("key", "value");
 //        cache.get("key");
@@ -35,7 +42,9 @@ public class App {
 //            System.out.println("counter %d time %s value %s".formatted(counter, LocalDateTime.now(), print));
 //        }
 
-        Cache<String, String> cacheScheduledFiller = Macache.scheduledFiller(filler, Duration.ofSeconds(10));
+        Cache<String, String> cacheScheduledFiller = Macache
+                .scheduledFiller(filler, Duration.ofSeconds(10))
+                .build();
         counter = 0;
         System.out.println("cache size %d".formatted(cacheScheduledFiller.size()));
         while (++counter < 60) {
