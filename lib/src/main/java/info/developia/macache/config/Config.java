@@ -1,4 +1,6 @@
-package info.developia.macache;
+package info.developia.macache.config;
+
+import info.developia.macache.Cache;
 
 abstract class Config<K, V> {
     private long maxSize;

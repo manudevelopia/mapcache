@@ -1,4 +1,4 @@
-package info.developia.macache;
+package info.developia.macache.cache;
 
 import java.util.Map;
 import java.util.function.Supplier;

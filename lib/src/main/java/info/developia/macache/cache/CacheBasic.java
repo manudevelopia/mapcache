@@ -1,4 +1,6 @@
-package info.developia.macache;
+package info.developia.macache.cache;
+
+import info.developia.macache.Cache;
 
 import java.util.HashMap;
 import java.util.Map;

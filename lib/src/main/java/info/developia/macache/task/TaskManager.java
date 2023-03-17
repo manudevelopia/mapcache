@@ -1,4 +1,4 @@
-package info.developia.macache;
+package info.developia.macache.task;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -6,7 +6,7 @@ import java.util.concurrent.ScheduledFuture;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-public class TaskManager {
+class TaskManager {
     private final Thread mainThread;
     private final ScheduledExecutorService scheduler;
     private ScheduledFuture<?> schedulerFuture;

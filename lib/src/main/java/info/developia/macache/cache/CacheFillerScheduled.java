@@ -1,4 +1,4 @@
-package info.developia.macache;
+package info.developia.macache.cache;
 
 import java.time.Duration;
 import java.util.Map;

@@ -1,4 +1,6 @@
-package info.developia.macache;
+package info.developia.macache.cache;
+
+import info.developia.macache.task.TaskManager;
 
 import java.time.Duration;
 import java.util.LinkedHashMap;
