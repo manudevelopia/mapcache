@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-class CacheExpire<K, V> extends CacheBasic<K, V> {
+public class CacheExpire<K, V> extends CacheBasic<K, V> {
     private final Map<K, Long> keyTimestamp = new LinkedHashMap<>();
     private final long cacheValidPeriodInMillis;
     private final TaskManager taskManager = new TaskManager();

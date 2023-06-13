@@ -6,7 +6,7 @@ import java.util.concurrent.ScheduledFuture;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-class TaskManager {
+public class TaskManager {
     private final Thread mainThread;
     private final ScheduledExecutorService scheduler;
     private ScheduledFuture<?> schedulerFuture;

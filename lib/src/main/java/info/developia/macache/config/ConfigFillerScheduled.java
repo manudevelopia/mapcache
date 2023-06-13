@@ -1,7 +1,7 @@
 package info.developia.macache.config;
 
 import info.developia.macache.Cache;
-import info.developia.macache.CacheFillerScheduled;
+import info.developia.macache.cache.CacheFillerScheduled;
 
 import java.time.Duration;
 import java.util.Map;

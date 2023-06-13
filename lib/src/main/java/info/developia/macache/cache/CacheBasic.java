@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-class CacheBasic<K, V> implements Cache<K, V> {
+public class CacheBasic<K, V> implements Cache<K, V> {
     protected final Map<K, V> data = new HashMap<>();
 
     protected final ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
