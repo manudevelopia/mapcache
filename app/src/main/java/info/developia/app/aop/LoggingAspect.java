@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 public class LoggingAspect {
-    // Step 2: Implement the InvocationHandler
+
     static class LogInvocationHandler implements InvocationHandler {
         private final Object target;
 
@@ -15,24 +15,23 @@ public class LoggingAspect {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            // Before method execution
             System.out.println("Method " + method.getName() + " is about to be executed.");
 
-            // Invoke the original method
+            if ((int) args[0] == 2 && (int) args[1] == 8) {
+                System.out.println("Cached result for Method " + method.getName() + " has been returned.");
+                return 6;
+            }
+
             Object result = method.invoke(target, args);
-
-            // After method execution
             System.out.println("Method " + method.getName() + " has been executed.");
-
             return result;
         }
     }
 
-    // Step 3 and 4: Create Proxy Objects and Apply the Aspect
-    public static <T> T createProxy(T target) {
+    public static <T> T createProxy(T target, Class<T> clazz) {
         return (T) Proxy.newProxyInstance(
                 target.getClass().getClassLoader(),
-                target.getClass().getInterfaces(),
+                new Class<?>[]{clazz},
                 new LogInvocationHandler(target)
         );
     }
