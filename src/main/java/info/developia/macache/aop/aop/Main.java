@@ -1,11 +1,11 @@
-package info.developia.app.aop;
+package info.developia.macache.aop.aop;
 
-import info.developia.app.aop.code.Calculator;
-import info.developia.app.aop.code.CalculatorImpl;
+
+import info.developia.macache.aop.aop.code.Calculator;
 
 public class Main {
     public static void main(String[] args) {
-        Calculator calculator = new CalculatorImpl();
+        Calculator calculator = new Calculator("normal");
         Calculator proxyCalculator = LoggingAspect.createProxy(calculator, Calculator.class);
         extracted(proxyCalculator, 2, 3);
         extracted(proxyCalculator, 2, 8);
