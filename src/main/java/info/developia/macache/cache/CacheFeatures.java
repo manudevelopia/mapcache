@@ -1,6 +1,6 @@
-package info.developia.macache;
+package info.developia.macache.cache;
 
-public interface Cache<K, V> {
+public interface CacheFeatures<K, V> {
     void put(K key, V value);
     V get(K key);
     boolean contains (K key);

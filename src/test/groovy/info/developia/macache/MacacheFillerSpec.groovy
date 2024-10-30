@@ -1,6 +1,6 @@
 package info.developia.macache
 
-
+import info.developia.macache.cache.CacheFeatures
 import spock.lang.Specification
 
 import java.util.function.Supplier
@@ -12,10 +12,10 @@ class MacacheFillerSpec extends Specification {
             "key3", "value3"
     )
     Supplier<Map<String, String>> filler = () -> data
-    Cache<String, String> cache
+    CacheFeatures<String, String> cache
 
     def setup() {
-        cache = Macache.filledOnce(filler).build()
+        cache = Macache.cache().filledOnce(filler).build()
     }
 
     def "Should have size as data right after initialization with filler"() {

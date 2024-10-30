@@ -1,6 +1,6 @@
 package info.developia.macache
 
-
+import info.developia.macache.cache.CacheFeatures
 import spock.lang.Specification
 
 import java.time.Duration
@@ -11,7 +11,7 @@ class MacacheExpireSpec extends Specification {
             "key2", "value2",
             "key3", "value3"
     )
-    Cache<String, String> cache = Macache.expireIn(Duration.ofSeconds(5))
+    CacheFeatures<String, String> cache = Macache.cache().expireIn(Duration.ofSeconds(5))
 
     def "Should be empty right after initialization"() {
         when:

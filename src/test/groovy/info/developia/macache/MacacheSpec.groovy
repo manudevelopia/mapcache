@@ -1,13 +1,13 @@
 package info.developia.macache
 
-
+import info.developia.macache.cache.CacheFeatures
 import spock.lang.Specification
 
 class MacacheSpec extends Specification {
-    Cache<String, String> cache
+    CacheFeatures<String, String> cache
 
     def setup() {
-        cache = Macache.build()
+        cache = Macache.cache().maxSize(100).build()
     }
 
     def "Should not have any item right after initialization"() {

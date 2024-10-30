@@ -1,18 +1,25 @@
 package info.developia.macache.cache;
 
-import info.developia.macache.Cache;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class CacheBasic<K, V> implements Cache<K, V> {
+public class Cache<K, V> implements CacheFeatures<K, V> {
     protected final Map<K, V> data = new HashMap<>();
+    protected final long maxSize;
 
     protected final ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
     protected final Lock readLock = reentrantReadWriteLock.readLock();
     protected final Lock writeLock = reentrantReadWriteLock.readLock();
+
+    public Cache() {
+        this(Integer.MAX_VALUE);
+    }
+
+    public Cache(long maxSize) {
+        this.maxSize = maxSize;
+    }
 
     public void put(K key, V value) {
         if (key == null) return;

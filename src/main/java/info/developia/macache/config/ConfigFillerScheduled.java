@@ -1,7 +1,7 @@
 package info.developia.macache.config;
 
-import info.developia.macache.Cache;
-import info.developia.macache.cache.CacheFillerScheduled;
+import info.developia.macache.cache.CacheFeatures;
+import info.developia.macache.cache.CacheFeaturesFillerScheduled;
 
 import java.time.Duration;
 import java.util.Map;
@@ -16,12 +16,12 @@ public class ConfigFillerScheduled<K, V> extends Config<K, V> {
         this.refillPeriod = refillPeriod;
     }
 
-    public ConfigFillerScheduled<K, V> maxSize(long maxSize) {
-        super.setMaxSize(maxSize);
+    public ConfigFillerScheduled<K, V> maxSize(int maxSize) {
+        super.maxSize(maxSize);
         return this;
     }
 
-    public Cache<K, V> build() {
-        return new CacheFillerScheduled<>(filler, refillPeriod);
+    public CacheFeatures<K, V> build() {
+        return new CacheFeaturesFillerScheduled<>(filler, refillPeriod);
     }
 }

@@ -6,12 +6,13 @@ import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CacheExpire<K, V> extends CacheBasic<K, V> {
+public class CacheFeaturesExpire<K, V> extends Cache<K, V> {
     private final Map<K, Long> keyTimestamp = new LinkedHashMap<>();
     private final long cacheValidPeriodInMillis;
     private final TaskManager taskManager = new TaskManager();
 
-    public CacheExpire(Duration cacheValidPeriod) {
+    public CacheFeaturesExpire(Duration cacheValidPeriod) {
+        super(Long.MAX_VALUE);
         cacheValidPeriodInMillis = cacheValidPeriod.toMillis();
         taskManager.schedule(this::delExpiredKeys, cacheValidPeriodInMillis);
     }
