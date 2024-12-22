@@ -7,5 +7,6 @@ public interface CacheFeatures<K, V> {
     void del(K key);
     void clear();
     int size();
+    int maxSize();
     void close();
 }

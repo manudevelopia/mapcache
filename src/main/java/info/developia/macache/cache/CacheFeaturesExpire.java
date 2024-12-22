@@ -12,7 +12,7 @@ public class CacheFeaturesExpire<K, V> extends Cache<K, V> {
     private final TaskManager taskManager = new TaskManager();
 
     public CacheFeaturesExpire(Duration cacheValidPeriod) {
-        super(Long.MAX_VALUE);
+        super(Integer.MAX_VALUE);
         cacheValidPeriodInMillis = cacheValidPeriod.toMillis();
         taskManager.schedule(this::delExpiredKeys, cacheValidPeriodInMillis);
     }

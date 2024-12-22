@@ -1,7 +1,7 @@
 package info.developia.macache.config;
 
-import info.developia.macache.cache.CacheFeatures;
 import info.developia.macache.cache.Cache;
+import info.developia.macache.cache.CacheFeatures;
 import info.developia.macache.cache.CacheFeaturesExpire;
 
 import java.time.Duration;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class Config<K, V> {
-    private long maxSize = Integer.MAX_VALUE;
+    private int maxSize = 10000;
 
     public Config<K, V> maxSize(int maxSize) {
         this.maxSize = maxSize;

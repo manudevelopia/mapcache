@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Cache<K, V> implements CacheFeatures<K, V> {
     protected final Map<K, V> data = new HashMap<>();
-    protected final long maxSize;
+    protected final int maxSize;
 
     protected final ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
     protected final Lock readLock = reentrantReadWriteLock.readLock();
@@ -17,12 +17,12 @@ public class Cache<K, V> implements CacheFeatures<K, V> {
         this(Integer.MAX_VALUE);
     }
 
-    public Cache(long maxSize) {
+    public Cache(int maxSize) {
         this.maxSize = maxSize;
     }
 
     public void put(K key, V value) {
-        if (key == null) return;
+        if (key == null || size() == maxSize) return;
         try {
             writeLock.lock();
             data.put(key, value);
@@ -62,6 +62,10 @@ public class Cache<K, V> implements CacheFeatures<K, V> {
 
     public int size() {
         return data.size();
+    }
+
+    public int maxSize() {
+        return maxSize;
     }
 
     @Override
