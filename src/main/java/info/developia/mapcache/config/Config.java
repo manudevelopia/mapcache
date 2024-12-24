@@ -1,8 +1,8 @@
-package info.developia.macache.config;
+package info.developia.mapcache.config;
 
-import info.developia.macache.cache.Cache;
-import info.developia.macache.cache.CacheFeatures;
-import info.developia.macache.cache.CacheFeaturesExpire;
+import info.developia.mapcache.cache.Cache;
+import info.developia.mapcache.cache.CacheFeatures;
+import info.developia.mapcache.cache.CacheFeaturesExpire;
 
 import java.time.Duration;
 import java.util.Map;
@@ -14,10 +14,6 @@ public class Config<K, V> {
     public Config<K, V> maxSize(int maxSize) {
         this.maxSize = maxSize;
         return this;
-    }
-
-    public long maxSize() {
-        return maxSize;
     }
 
     public CacheFeatures<K, V> build() {

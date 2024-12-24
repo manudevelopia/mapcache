@@ -1,17 +1,17 @@
-package info.developia.macache
+package info.developia.mapcache
 
-import info.developia.macache.cache.CacheFeatures
+import info.developia.mapcache.cache.CacheFeatures
 import spock.lang.Specification
 
 import java.time.Duration
 
-class MacacheExpireSpec extends Specification {
+class MapcacheExpireSpec extends Specification {
     Map<String, String> data = Map.of(
             "key1", "value1",
             "key2", "value2",
             "key3", "value3"
     )
-    CacheFeatures<String, String> cache = Macache.cache().expireIn(Duration.ofSeconds(5))
+    CacheFeatures<String, String> cache = Mapcache.cache().expireIn(Duration.ofSeconds(5))
 
     def "Should be empty right after initialization"() {
         when:

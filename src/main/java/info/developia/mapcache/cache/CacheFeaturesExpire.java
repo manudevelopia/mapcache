@@ -1,6 +1,6 @@
-package info.developia.macache.cache;
+package info.developia.mapcache.cache;
 
-import info.developia.macache.task.TaskManager;
+import info.developia.mapcache.task.TaskManager;
 
 import java.time.Duration;
 import java.util.LinkedHashMap;

@@ -1,9 +1,9 @@
-package info.developia.macache
+package info.developia.mapcache
 
 import spock.lang.Specification
 
-class MacacheSpec extends Specification {
-    def cache = Macache.cache().maxSize(10).build()
+class MapcacheSpec extends Specification {
+    def cache = Mapcache.cache().maxSize(10).build()
 
     def "Should not have any item right after initialization"() {
         when:

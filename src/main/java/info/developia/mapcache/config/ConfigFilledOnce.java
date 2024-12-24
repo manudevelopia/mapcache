@@ -1,7 +1,7 @@
-package info.developia.macache.config;
+package info.developia.mapcache.config;
 
-import info.developia.macache.cache.CacheFeatures;
-import info.developia.macache.cache.CacheFeaturesFilledOnce;
+import info.developia.mapcache.cache.CacheFeatures;
+import info.developia.mapcache.cache.CacheFeaturesFilledOnce;
 
 import java.util.Map;
 import java.util.function.Supplier;

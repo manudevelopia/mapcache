@@ -1,4 +1,4 @@
-package info.developia.macache.cache;
+package info.developia.mapcache.cache;
 
 public interface CacheFeatures<K, V> {
     void put(K key, V value);

@@ -1,11 +1,11 @@
-package info.developia.macache
+package info.developia.mapcache
 
-import info.developia.macache.cache.CacheFeatures
+import info.developia.mapcache.cache.CacheFeatures
 import spock.lang.Specification
 
 import java.util.function.Supplier
 
-class MacacheFillerSpec extends Specification {
+class MapcacheFillerSpec extends Specification {
     Map<String, String> data = Map.of(
             "key1", "value1",
             "key2", "value2",
@@ -15,7 +15,7 @@ class MacacheFillerSpec extends Specification {
     CacheFeatures<String, String> cache
 
     def setup() {
-        cache = Macache.cache().filledOnce(filler).build()
+        cache = Mapcache.cache().filledOnce(filler).build()
     }
 
     def "Should have size as data right after initialization with filler"() {
