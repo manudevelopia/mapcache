@@ -1,4 +1,4 @@
-package info.developia.mapcache.task;
+package info.developia.lib.mapcache.task;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

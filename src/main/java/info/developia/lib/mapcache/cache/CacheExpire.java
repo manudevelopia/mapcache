@@ -1,20 +1,21 @@
-package info.developia.mapcache.cache;
+package info.developia.lib.mapcache.cache;
 
-import info.developia.mapcache.task.TaskManager;
+import info.developia.lib.mapcache.task.TaskManager;
 
 import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CacheFeaturesExpire<K, V> extends Cache<K, V> {
+public class CacheExpire<K, V> extends CacheBasic<K, V> {
     private final Map<K, Long> keyTimestamp = new LinkedHashMap<>();
-    private final long cacheValidPeriodInMillis;
     private final TaskManager taskManager = new TaskManager();
+    private final long expirePeriodInMillis;
 
-    public CacheFeaturesExpire(Duration cacheValidPeriod) {
-        super(Integer.MAX_VALUE);
-        cacheValidPeriodInMillis = cacheValidPeriod.toMillis();
-        taskManager.schedule(this::delExpiredKeys, cacheValidPeriodInMillis);
+    public CacheExpire(int maxSize,
+                       Duration expirePeriod) {
+        super(maxSize);
+        expirePeriodInMillis = expirePeriod.toMillis();
+        taskManager.schedule(this::delExpiredKeys, expirePeriodInMillis);
     }
 
     private void delExpiredKeys() {
@@ -26,7 +27,7 @@ public class CacheFeaturesExpire<K, V> extends Cache<K, V> {
     @Override
     public void put(K key, V value) {
         super.put(key, value);
-        keyTimestamp.put(key, System.currentTimeMillis() + cacheValidPeriodInMillis);
+        keyTimestamp.put(key, System.currentTimeMillis() + expirePeriodInMillis);
     }
 
     @Override

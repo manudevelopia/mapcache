@@ -1,5 +1,7 @@
 
-# Mapcache
+# MapCache
+
+WIP
 
 ![mapcache.svg](doc/mapcache.svg)
 
