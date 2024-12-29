@@ -1,9 +1,10 @@
+![mapcache.svg](doc/mapcache.svg)
 
 # MapCache
 
 WIP
 
-![mapcache.svg](doc/mapcache.svg)
+
 
 Links used to build this project
 https://medium.com/analytics-vidhya/advanced-locking-in-java-reentrant-read-write-lock-b40fce0833de

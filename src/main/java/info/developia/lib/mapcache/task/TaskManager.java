@@ -1,37 +1,36 @@
 package info.developia.lib.mapcache.task;
 
+import java.time.Duration;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+public class TaskManager implements AutoCloseable {
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    private final ExecutorService taskExecutor = Executors.newVirtualThreadPerTaskExecutor();
+    private final Thread mainThread = Thread.currentThread();
+    private static TaskManager taskManager;
 
-public class TaskManager {
-    private final Thread mainThread;
-    private final ScheduledExecutorService scheduler;
-    private ScheduledFuture<?> schedulerFuture;
-
-    public TaskManager() {
-        mainThread = Thread.currentThread();
-        scheduler = Executors.newScheduledThreadPool(1);
+    private TaskManager() {
     }
 
-    public boolean appIsAlive() {
-        return mainThread.isAlive();
+    public static TaskManager getInstance() {
+        if (taskManager == null) {
+            taskManager = new TaskManager();
+        }
+        return taskManager;
     }
 
-    public void schedule(Runnable delExpiredKeys, long cacheValidPeriodInMillis) {
-        schedulerFuture = scheduler.scheduleAtFixedRate(() -> {
-            if (appIsAlive()) {
-                delExpiredKeys.run();
-            } else {
-                shutdown();
-            }
-        }, 0, cacheValidPeriodInMillis, MILLISECONDS);
+    public void schedule(Runnable task, Duration interval) {
+        scheduler.schedule(() -> taskExecutor.execute(() -> {
+            if (mainThread.isAlive()) task.run();
+            else close();
+        }), interval.toMillis(), TimeUnit.MILLISECONDS);
     }
 
-    public void shutdown() {
-        schedulerFuture.cancel(true);
+    @Override
+    public void close() {
         scheduler.shutdown();
     }
 }

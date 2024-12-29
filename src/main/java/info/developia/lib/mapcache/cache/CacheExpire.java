@@ -1,58 +1,43 @@
 package info.developia.lib.mapcache.cache;
 
-import info.developia.lib.mapcache.task.TaskManager;
+import info.developia.lib.mapcache.task.KeyExpireRegistry;
 
 import java.time.Duration;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class CacheExpire<K, V> extends CacheBasic<K, V> {
-    private final Map<K, Long> keyTimestamp = new LinkedHashMap<>();
-    private final TaskManager taskManager = new TaskManager();
-    private final long expirePeriodInMillis;
+    private final KeyExpireRegistry<K> keyExpireRegistry;
 
-    public CacheExpire(int maxSize,
-                       Duration expirePeriod) {
+    public CacheExpire(int maxSize, Duration expirePeriod) {
         super(maxSize);
-        expirePeriodInMillis = expirePeriod.toMillis();
-        taskManager.schedule(this::delExpiredKeys, expirePeriodInMillis);
-    }
-
-    private void delExpiredKeys() {
-        long now = System.currentTimeMillis();
-        keyTimestamp.entrySet().stream().takeWhile((entry -> entry.getValue() < now))
-                .forEach(entry -> del(entry.getKey()));
+        keyExpireRegistry = new KeyExpireRegistry<>(expirePeriod, this::del);
     }
 
     @Override
     public void put(K key, V value) {
         super.put(key, value);
-        keyTimestamp.put(key, System.currentTimeMillis() + expirePeriodInMillis);
+        keyExpireRegistry.put(key);
     }
 
     @Override
     public V get(K key) {
-        if (key == null || !keyTimestamp.containsKey(key)) return null;
-        if (keyTimestamp.get(key) > System.currentTimeMillis()) {
-            return super.get(key);
-        }
-        return null;
+        if (key == null || !keyExpireRegistry.containsKey(key)) return null;
+        return super.get(key);
     }
 
     @Override
     public void del(K key) {
         super.del(key);
-        keyTimestamp.remove(key);
+        keyExpireRegistry.remove(key);
     }
 
     @Override
     public void clear() {
         super.clear();
-        keyTimestamp.clear();
+        keyExpireRegistry.clear();
     }
 
     public void close() {
         super.close();
-        taskManager.shutdown();
+        keyExpireRegistry.close();
     }
 }

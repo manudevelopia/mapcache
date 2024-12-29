@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public class CacheFillerScheduledExpire<K, V> extends CacheFillerScheduled<K, V> {
     private final Map<K, Long> keyTimestamp = new LinkedHashMap<>();
-    private final TaskManager taskManager = new TaskManager();
+    private final TaskManager taskManager =  TaskManager.getInstance();
     private final long expirePeriodInMillis;
 
     public CacheFillerScheduledExpire(int maxSize,
@@ -17,8 +17,8 @@ public class CacheFillerScheduledExpire<K, V> extends CacheFillerScheduled<K, V>
                                       Duration refillPeriod,
                                       Duration expirePeriod) {
         super(maxSize, filler, refillPeriod);
+        taskManager.schedule(this::delExpiredKeys, expirePeriod);
         expirePeriodInMillis = expirePeriod.toMillis();
-        taskManager.schedule(this::delExpiredKeys, expirePeriodInMillis);
     }
 
     private void delExpiredKeys() {
@@ -56,6 +56,6 @@ public class CacheFillerScheduledExpire<K, V> extends CacheFillerScheduled<K, V>
 
     public void close() {
         super.close();
-        taskManager.shutdown();
+        taskManager.close();
     }
 }
