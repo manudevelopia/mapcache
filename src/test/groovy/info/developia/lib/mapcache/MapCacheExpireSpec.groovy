@@ -11,13 +11,32 @@ class MapCacheExpireSpec extends Specification {
             "key3", "value3"
     )
 
-    def "Should be empty right after initialization"() {
+    def "Should retrieve key value if key is not expired"() {
         given:
-        Cache<String, String> cache = MapCache.config().expireIn(Duration.ofMillis(100)).cache()
-        when:
+        def cache = MapCache.config().expireIn(Duration.ofMillis(500)).cache()
         data.forEach cache::put
-        def result = true
-        while (result) sleep 1000
+        when:
+        sleep 300
+        then:
+        cache.get("key1") != null
+    }
+
+    def "Should not retrieve key value if key is expired"() {
+        given:
+        def cache = MapCache.config().expireIn(Duration.ofMillis(500)).cache()
+        data.forEach cache::put
+        when:
+        sleep 501
+        then:
+        cache.get("key1") == null
+    }
+
+    def "Should be size 0 after all keys expire"() {
+        given:
+        def cache = MapCache.config().expireIn(Duration.ofMillis(500)).cache()
+        data.forEach cache::put
+        when:
+        sleep 1000
         then:
         cache.size() == 0
     }

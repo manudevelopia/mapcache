@@ -26,18 +26,18 @@ public class CacheExpire<K, V> extends CacheBasic<K, V> {
 
     @Override
     public void del(K key) {
-        super.del(key);
         keyExpireRegistry.remove(key);
+        super.del(key);
     }
 
     @Override
     public void clear() {
-        super.clear();
         keyExpireRegistry.clear();
+        super.clear();
     }
 
     public void close() {
-        super.close();
         keyExpireRegistry.close();
+        super.close();
     }
 }

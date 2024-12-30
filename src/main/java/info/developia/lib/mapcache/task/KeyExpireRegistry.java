@@ -16,10 +16,12 @@ public class KeyExpireRegistry<K> {
     }
 
     private void delExpiredKeys(Consumer<K> cacheDelete) {
+        if (keyTimestamp.isEmpty()) return;
         long now = System.currentTimeMillis();
-        keyTimestamp.entrySet().stream()
+        var expiredKeys = keyTimestamp.entrySet().stream()
                 .takeWhile((entry -> entry.getValue() < now))
-                .forEach(entry -> cacheDelete.accept(entry.getKey()));
+                .toList();
+        expiredKeys.forEach(entry -> cacheDelete.accept(entry.getKey()));
     }
 
     public void put(K key) {
