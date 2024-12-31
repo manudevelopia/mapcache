@@ -4,13 +4,12 @@ import java.time.Duration;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class CacheFillerExpire<K, V> extends CacheFiller<K, V> {
-    private Duration expirePeriod;
+public class CacheFillerExpire<K, V> extends CacheExpire<K, V> {
 
     public CacheFillerExpire(int maxSize,
                              Supplier<Map<K, V>> filler,
                              Duration expirePeriod) {
-        super(maxSize, filler);
-        this.expirePeriod = expirePeriod;
+        super(maxSize, expirePeriod);
+        filler.get().forEach(this::put);
     }
 }

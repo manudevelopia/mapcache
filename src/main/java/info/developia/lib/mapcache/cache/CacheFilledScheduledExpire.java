@@ -7,12 +7,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class CacheFillerScheduledExpire<K, V> extends CacheFillerScheduled<K, V> {
+public class CacheFilledScheduledExpire<K, V> extends CacheFilledScheduled<K, V> {
     private final Map<K, Long> keyTimestamp = new LinkedHashMap<>();
     private final TaskManager taskManager =  TaskManager.getInstance();
     private final long expirePeriodInMillis;
 
-    public CacheFillerScheduledExpire(int maxSize,
+    public CacheFilledScheduledExpire(int maxSize,
                                       Supplier<Map<K, V>> filler,
                                       Duration refillPeriod,
                                       Duration expirePeriod) {

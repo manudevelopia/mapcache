@@ -3,10 +3,10 @@ package info.developia.lib.mapcache.config;
 import info.developia.lib.mapcache.Cache;
 import info.developia.lib.mapcache.cache.CacheBasic;
 import info.developia.lib.mapcache.cache.CacheExpire;
-import info.developia.lib.mapcache.cache.CacheFiller;
+import info.developia.lib.mapcache.cache.CacheFilled;
 import info.developia.lib.mapcache.cache.CacheFillerExpire;
-import info.developia.lib.mapcache.cache.CacheFillerScheduled;
-import info.developia.lib.mapcache.cache.CacheFillerScheduledExpire;
+import info.developia.lib.mapcache.cache.CacheFilledScheduled;
+import info.developia.lib.mapcache.cache.CacheFilledScheduledExpire;
 
 import java.time.Duration;
 import java.util.Map;
@@ -19,16 +19,16 @@ public class CacheFactory<K, V> {
 
     public Cache<K, V> build() {
         if (filler != null && refillPeriod != Duration.ZERO && expirePeriod != Duration.ZERO) {
-            return new CacheFillerScheduledExpire<>(maxSize, filler, refillPeriod, expirePeriod);
+            return new CacheFilledScheduledExpire<>(maxSize, filler, refillPeriod, expirePeriod);
         }
         if (filler != null && refillPeriod != Duration.ZERO) {
-            return new CacheFillerScheduled<>(maxSize, filler, refillPeriod);
+            return new CacheFilledScheduled<>(maxSize, filler, refillPeriod);
         }
         if (filler != null && expirePeriod != Duration.ZERO) {
             return new CacheFillerExpire<>(maxSize, filler, expirePeriod);
         }
         if (filler != null) {
-            return new CacheFiller<>(maxSize, filler);
+            return new CacheFilled<>(maxSize, filler);
         }
         if (expirePeriod != Duration.ZERO) {
             return new CacheExpire<>(maxSize, expirePeriod);
