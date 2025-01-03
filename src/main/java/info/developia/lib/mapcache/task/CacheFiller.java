@@ -6,11 +6,12 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public class CacheFiller<K, V> {
-    private TaskManager taskManager;
     private final Supplier<Map<K, V>> filler;
+    private final TaskManager taskManager;
 
     public CacheFiller(Supplier<Map<K, V>> filler) {
         this.filler = filler;
+        taskManager = null;
     }
 
     public CacheFiller(Supplier<Map<K, V>> filler,

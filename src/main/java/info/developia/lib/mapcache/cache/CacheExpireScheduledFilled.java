@@ -6,19 +6,20 @@ import java.time.Duration;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class CacheFilledScheduled<K, V> extends CacheBasic<K, V> {
+public class CacheExpireScheduledFilled<K, V> extends CacheExpire<K, V> {
     private final CacheFiller<K, V> cacheFiller;
 
-    public CacheFilledScheduled(int maxSize,
-                                Supplier<Map<K, V>> filler,
-                                Duration refillPeriod) {
-        super(maxSize);
+    public CacheExpireScheduledFilled(int maxSize,
+                                      Supplier<Map<K, V>> filler,
+                                      Duration refillPeriod,
+                                      Duration expirePeriod) {
+        super(maxSize, expirePeriod);
         cacheFiller = new CacheFiller<>(filler, refillPeriod, this::put);
     }
 
     @Override
     public void close() {
-        super.close();
         cacheFiller.close();
+        super.close();
     }
 }

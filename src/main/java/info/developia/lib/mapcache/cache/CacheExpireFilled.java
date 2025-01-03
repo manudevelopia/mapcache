@@ -4,9 +4,9 @@ import java.time.Duration;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class CacheFillerExpire<K, V> extends CacheExpire<K, V> {
+public class CacheExpireFilled<K, V> extends CacheExpire<K, V> {
 
-    public CacheFillerExpire(int maxSize,
+    public CacheExpireFilled(int maxSize,
                              Supplier<Map<K, V>> filler,
                              Duration expirePeriod) {
         super(maxSize, expirePeriod);

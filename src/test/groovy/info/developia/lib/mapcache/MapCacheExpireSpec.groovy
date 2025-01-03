@@ -5,11 +5,7 @@ import spock.lang.Specification
 import java.time.Duration
 
 class MapCacheExpireSpec extends Specification {
-    Map<String, String> data = Map.of(
-            "key1", "value1",
-            "key2", "value2",
-            "key3", "value3"
-    )
+    def data = ['key1': 'value1', 'key2': 'value2', 'key3': 'value3']
 
     def "Should retrieve key value if key is not expired"() {
         given:
