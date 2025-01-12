@@ -29,7 +29,7 @@ public class KeyExpireRegistry<K> {
     }
 
     public boolean containsKey(K key) {
-        return keyTimestamp.get(key) > System.currentTimeMillis();
+        return keyTimestamp.containsKey(key) && keyTimestamp.get(key) > System.currentTimeMillis();
     }
 
     public void remove(K key) {

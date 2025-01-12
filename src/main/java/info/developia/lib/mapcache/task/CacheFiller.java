@@ -20,6 +20,7 @@ public class CacheFiller<K, V> {
         this.filler = filler;
         taskManager = TaskManager.getInstance();
         taskManager.schedule(() -> fill(put), refillPeriod);
+        fill(put);
     }
 
     public void fill(BiConsumer<K, V> put) {

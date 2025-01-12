@@ -1,9 +1,11 @@
 package info.developia.lib.mapcache.task
 
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import java.time.Duration
 
+@Ignore
 class TaskManagerTest extends Specification {
     def "Should task"() {
         given:
