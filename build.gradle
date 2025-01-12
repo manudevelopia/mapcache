@@ -1,12 +1,12 @@
 plugins {
     id 'java-library'
+    id 'groovy'
     id 'maven-publish'
     id 'io.github.gradle-nexus.publish-plugin' version '1.3.0'
-    id 'groovy'
 }
 
 group 'info.developia.lib'
-version '1.0-SNAPSHOT'
+version '1.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
