@@ -4,7 +4,7 @@ import spock.lang.Specification
 
 import java.time.Duration
 
-class MapCacheBasicConfigurationSpec extends Specification {
+class MapCacheConfigSpec extends Specification {
 
     def "Should have with default configuration"() {
         when:
