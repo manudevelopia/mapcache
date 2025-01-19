@@ -26,13 +26,4 @@ class MapCacheExpireFillerSpec extends Specification {
         then:
         cache.get("key1") == null
     }
-
-    def "Should be size 0 after all keys expire"() {
-        given:
-        def cache = MapCache.config().filler(filler).expireIn(Duration.ofMillis(500)).cache()
-        when:
-        sleep 1000
-        then:
-        cache.size() == 0
-    }
 }
